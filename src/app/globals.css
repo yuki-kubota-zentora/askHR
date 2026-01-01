@@ -1,26 +1,44 @@
 @import "tailwindcss";
 
+/* ZENTORA Tokens (HEX -> RGB) */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: 5 37 71;          /* #052547 */
+  --panel: 9 44 86;       /* 少し明るい面 */
+  --panel2: 12 56 104;    /* hover/入力面 */
+  --text: 255 255 255;    /* #FFFFFF */
+  --muted: 216 221 230;   /* #D8DDE6 */
+
+  --accent: 246 116 13;   /* #F6740D */
+  --accent-hex: #F6740D;  /* ★保険クラス用：必ずここで定義 */
+
+  --border: 255 255 255;  /* 白を薄く透過して使う */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
+/* 常にこのテーマ固定（念のため同じ内容を維持） */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --bg: 5 37 71;
+    --panel: 9 44 86;
+    --panel2: 12 56 104;
+    --text: 255 255 255;
+    --muted: 216 221 230;
+    --accent: 246 116 13;
+    --accent-hex: #F6740D;
+    --border: 255 255 255;
   }
 }
 
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: rgb(var(--bg));
+  color: rgb(var(--text));
 }
+
+:focus-visible {
+  outline: none;
+}
+
+/* Tailwindが効かない時でも必ずオレンジを出す保険クラス */
+.z-accent-bg { background-color: var(--accent-hex); }
+.z-accent-text { color: var(--accent-hex); }
+.z-accent-border { border-color: var(--accent-hex); }
