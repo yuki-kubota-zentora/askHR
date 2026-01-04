@@ -38,10 +38,38 @@ export default function Chat() {
 
       if (!res.ok || !data.answer) throw new Error(data.error ?? "API error");
 
-      setMessages([...nextMessages, { role: "assistant", content: data.answer }]);
+      const answer = data.answer;
+      let current = "";
+
+      setMessages([...nextMessages, { role: "assistant", content: "" }]);
+
+      const tokens = Array.from(answer);
+      if (tokens.length === 0) {
+        setLoading(false);
+      }
+
+      tokens.forEach((token, idx) => {
+        setTimeout(() => {
+          current += token;
+          setMessages((prev) => {
+            const updated = [...prev];
+            const lastIndex = updated.length - 1;
+            if (lastIndex < 0) return prev;
+
+            const last = updated[lastIndex];
+            if (last.role !== "assistant") return prev;
+
+            updated[lastIndex] = { ...last, content: current };
+            return updated;
+          });
+
+          if (idx === tokens.length - 1) {
+            setLoading(false);
+          }
+        }, Math.min(20 * idx, 12000));
+      });
     } catch (e: any) {
       setMessages([...nextMessages, { role: "assistant", content: `エラー: ${e?.message ?? "unknown"}` }]);
-    } finally {
       setLoading(false);
     }
   }
@@ -99,7 +127,9 @@ export default function Chat() {
                     <div
                       className={[
                         "rounded-2xl px-4 py-3 text-sm leading-relaxed",
-                        isUser ? "bg-app-panel2/70 text-app-text" : "bg-white/10 text-app-text",
+                        isUser
+                          ? "bg-app-panel2/70 text-app-text ring-1 ring-app-accent/50"
+                          : "bg-white/10 text-app-text",
                       ].join(" ")}
                       style={{ whiteSpace: "pre-wrap" }}
                     >
