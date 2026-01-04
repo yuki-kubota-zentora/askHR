@@ -17,11 +17,28 @@ const CATEGORY_HINTS: readonly CatHint[] = [
   },
   {
     category: "social_insurance",
-    keywords: ["社会保険", "健康保険", "厚生年金", "年金", "資格取得", "年金事務所"],
+    keywords: [
+      "社会保険",
+      "健康保険",
+      "厚生年金",
+      "年金",
+      "資格取得",
+      "年金事務所",
+      "協会けんぽ",
+      "算定基礎",
+    ],
   },
   {
     category: "employment_insurance",
-    keywords: ["雇用保険", "ハローワーク", "離職票", "被保険者", "基本手当"],
+    keywords: [
+      "雇用保険",
+      "ハローワーク",
+      "離職票",
+      "被保険者",
+      "基本手当",
+      "適用事業所",
+      "資格取得届",
+    ],
   },
   {
     category: "work_time_overtime",
@@ -69,13 +86,23 @@ function guessCategories(query: string): HrCategory[] {
     .sort((a, b) => b.score - a.score);
 
   // 何もヒットしない場合は「初めて雇用」系 + 雇用契約を優先（MVPとして最も価値が出やすい）
-  if (hits.length === 0) return ["hiring_onboarding", "labor_contract", "social_insurance"];
+  if (hits.length === 0)
+    return ["hiring_onboarding", "labor_contract", "social_insurance", "subsidy"];
 
   // 上位2カテゴリくらいを主軸にする（多すぎるとブレる）
   const top = hits.slice(0, 2).map((x) => x.category);
 
   // 助成金が含まれていたら優先的に混ぜる
   if (!top.includes("subsidy") && hits.some((x) => x.category === "subsidy")) {
+    top.push("subsidy");
+  }
+
+  // 「初めて雇う」「採用」などの相談は助成金の興味が強い前提で混ぜる
+  if (
+    top.includes("hiring_onboarding") &&
+    !top.includes("subsidy") &&
+    q.includes("雇")
+  ) {
     top.push("subsidy");
   }
 
