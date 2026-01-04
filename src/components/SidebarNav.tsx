@@ -5,11 +5,7 @@ import { usePathname } from "next/navigation";
 
 type Item = { label: string; href: string };
 
-const items: Item[] = [
-  { label: "チャット", href: "/" },
-  { label: "参照ソース（MVP）", href: "/sources" },
-  { label: "設定（後で追加）", href: "/settings" },
-];
+const items: Item[] = [{ label: "チャット", href: "/" }];
 
 export default function SidebarNav() {
   const pathname = usePathname();
