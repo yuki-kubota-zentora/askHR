@@ -83,9 +83,9 @@ export default function Chat() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="rounded-2xl bg-app-panel p-6 shadow-[0_10px_30px_rgba(0,0,0,0.25)]">
-        <div className="flex items-start justify-between gap-4">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="rounded-2xl bg-app-panel p-4 shadow-[0_10px_30px_rgba(0,0,0,0.25)] sm:p-6">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <h1 className="text-lg font-semibold tracking-wide">
               人事労務アクション提案チャット（MVP）
@@ -97,7 +97,7 @@ export default function Chat() {
 
           <div
             className={[
-              "rounded-full px-3 py-1 text-xs font-semibold",
+              "self-start rounded-full px-3 py-1 text-xs font-semibold",
               loading ? "z-accent-bg text-white" : "bg-white/10 text-app-muted",
             ].join(" ")}
           >
@@ -105,11 +105,11 @@ export default function Chat() {
           </div>
         </div>
 
-        <div className="mt-4 h-[2px] w-56 z-accent-bg" />
+        <div className="mt-4 h-[2px] w-full max-w-xs z-accent-bg" />
       </div>
 
       <div className="rounded-2xl bg-app-panel p-4 shadow-[0_10px_30px_rgba(0,0,0,0.25)]">
-        <div className="max-h-[52vh] space-y-3 overflow-auto pr-1">
+        <div className="max-h-[60vh] space-y-3 overflow-auto pr-1 sm:max-h-[52vh]">
           {messages.length === 0 ? (
             <div className="rounded-xl bg-app-panel2/40 p-4 text-sm text-app-muted">
               例：従業員10名。パート1名が育休を取得したいと言っています。会社として何を準備すべき？
@@ -145,10 +145,10 @@ export default function Chat() {
       </div>
 
       <div className="rounded-2xl bg-app-panel p-4 shadow-[0_10px_30px_rgba(0,0,0,0.25)]">
-        <div className="flex gap-3">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
           <div className="flex-1">
             <textarea
-              className="min-h-[72px] w-full resize-none rounded-2xl bg-white/10 px-4 py-3 text-sm text-app-text placeholder:text-app-muted/90 outline-none focus:ring-4 focus:ring-app-accent/25"
+              className="min-h-[96px] w-full resize-none rounded-2xl bg-white/10 px-4 py-3 text-sm text-app-text placeholder:text-app-muted/90 outline-none focus:ring-4 focus:ring-app-accent/25 sm:min-h-[72px]"
               placeholder="状況を入力してください（送信：ボタン または Ctrl+Enter / Cmd+Enter）"
               value={input}
               onChange={(e) => setInput(e.target.value)}
@@ -160,7 +160,7 @@ export default function Chat() {
           </div>
 
           <button
-            className="h-[72px] shrink-0 rounded-2xl z-accent-bg px-6 text-sm font-semibold text-white transition-opacity disabled:opacity-40"
+            className="h-12 shrink-0 rounded-2xl z-accent-bg px-4 text-sm font-semibold text-white transition-opacity disabled:opacity-40 sm:h-[72px] sm:px-6"
             onClick={handleSend}
             disabled={!canSend}
             title="Ctrl+Enter / Cmd+Enter でも送信できます"

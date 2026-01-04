@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import SidebarNav from "@/components/SidebarNav";
+import MobileHeader from "@/components/MobileHeader";
 
 export const metadata: Metadata = {
   title: "HR Action Assistant (MVP)",
@@ -20,8 +21,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="absolute -bottom-72 -right-72 h-[700px] w-[700px] rounded-full bg-white/10 blur-3xl" />
         </div>
 
-        <div className="flex min-h-screen">
-          <aside className="w-72 shrink-0 bg-app-panel">
+        <div className="flex min-h-screen flex-col md:flex-row">
+          <MobileHeader />
+
+          <aside className="hidden w-72 shrink-0 bg-app-panel md:block">
             <div className="px-6 pt-8 pb-5">
               <div className="text-sm font-semibold tracking-wide">HR Action Assistant</div>
               <div className="mt-1 text-xs text-app-muted">MVP（一般情報提供）</div>
@@ -37,8 +40,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
           </aside>
 
-          <main className="flex-1 p-10">
-            <div className="mx-auto max-w-4xl">{children}</div>
+          <main className="w-full flex-1 p-4 sm:p-6 md:p-10">
+            <div className="mx-auto w-full max-w-4xl">{children}</div>
           </main>
         </div>
       </body>
