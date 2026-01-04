@@ -4,8 +4,6 @@ import { buildRetrievalContext, retrieveHrSources } from "@/lib/hr_retriever";
 
 type IncomingMsg = { role: "user" | "assistant"; content: string };
 
-const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-
 function buildTranscript(messages: IncomingMsg[]) {
   // 会話履歴を1本の文字列に整形（確実に動く）
   return messages
@@ -42,6 +40,8 @@ export async function POST(req: Request) {
       );
     }
 
+    const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
     // --- RAG（サーバ側で参照リンクを選ぶ） ---
     const sources = retrieveHrSources(lastUser, 3);
     const retrievalContext = buildRetrievalContext(sources);
@@ -67,16 +67,20 @@ export async function POST(req: Request) {
 - まず最初に、ユーザーの状況や気持ちを受け止める一言を入れる（1〜2文）
 - 次に、入力内容を短く言い換えて整理する（箇条書きでも良いが短く）
 - そのうえで、一般的な進め方を“会話文”で案内する（チェックリストを多用しない）
+- 行動提案は「いつ・どこに・誰が・何をする」を短く添えて具体化する（所要時間の目安があれば書く）
+- 助成金を聞かれていなくても、雇用に関する相談では「申請しやすい助成金トップ候補」を1つ挙げる
 - 質問は最大2問まで（必要最低限に絞る）。質問が不要なら無理に聞かない
 - 口調は親身で丁寧。命令・評価・詰問は禁止
 
 【出力フォーマット（この順番は守る）】
 1) 受け止めの一言（短く）
 2) 状況の整理（短く）
-3) 次にやることの提案（2〜5項目。文章中心。必要なら短い箇条書き）
-4) 追加で確認したいこと（0〜2問。自然な会話として）
-5) 注意（1〜2文。断定回避＋専門家/行政確認の促し）
-6) 参照一次情報（リンク）※必ず末尾（この後に余計な文章を足さない）
+3) 今日すぐやること（最大3件。具体的な行動＋所要時間や窓口）
+4) 今後のタイムラインToDo（例：今週中、今月中などの時系列で2〜4件）
+5) 助成金トップ候補（1件。理由は推定ベースで簡潔に）
+6) 追加で確認したいこと（0〜2問。自然な会話として）
+7) 注意（1〜2文。断定回避＋専門家/行政確認の促し）
+8) 参照一次情報（リンク）※必ず末尾（この後に余計な文章を足さない）
 
 --- 参照一次情報（サーバ側で選んだもの）---
 ${retrievalContext}

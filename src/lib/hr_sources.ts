@@ -95,6 +95,13 @@ export const HR_SOURCES = [
     tags: ["社会保険", "資格取得", "健康保険", "厚生年金", "入社", "手続き"],
   },
   {
+    title: "協会けんぽ：適用事業所・健康保険加入の案内",
+    url: "https://www.kyoukaikenpo.or.jp/g3/cat330/sb3130/sbb3133/1401-140/",
+    category: "social_insurance",
+    priority: 4,
+    tags: ["協会けんぽ", "健康保険", "適用事業所", "加入手続き", "保険料"],
+  },
+  {
     title: "健康保険・厚生年金保険の適用関係届書（日本年金機構）",
     url: "https://www.nenkin.go.jp/shinsei/kounen/tekiyo/index.html",
     category: "social_insurance",
@@ -109,6 +116,13 @@ export const HR_SOURCES = [
     category: "employment_insurance",
     priority: 5,
     tags: ["雇用保険", "加入", "手続き", "事業主", "給付", "基本手当"],
+  },
+  {
+    title: "雇用保険の適用事業の設置届（厚労省）",
+    url: "https://www.mhlw.go.jp/bunya/koyou/koyouhoken13/02.html",
+    category: "employment_insurance",
+    priority: 4,
+    tags: ["雇用保険", "適用事業所", "設置届", "手続き", "ハローワーク"],
   },
   {
     title: "育児休業等給付について（厚労省）",
@@ -205,5 +219,19 @@ export const HR_SOURCES = [
     category: "subsidy",
     priority: 4,
     tags: ["キャリアアップ助成金", "正社員化", "有期", "パート", "処遇改善"],
+  },
+  {
+    title: "特定求職者雇用開発助成金（厚労省）",
+    url: "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000148857.html",
+    category: "subsidy",
+    priority: 4,
+    tags: ["特定求職者雇用開発助成金", "雇入れ", "新規雇用", "要件"],
+  },
+  {
+    title: "人材開発支援助成金（厚労省）",
+    url: "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000190600.html",
+    category: "subsidy",
+    priority: 3,
+    tags: ["人材開発", "訓練", "助成金", "OJT", "OFF-JT"],
   },
 ] as const satisfies readonly HrSource[];
